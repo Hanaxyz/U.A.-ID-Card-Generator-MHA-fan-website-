@@ -309,6 +309,14 @@ cursor: pointer;
         font-size: 7px;
         padding: 5px 8px;
     }
+
+  .download-button{
+
+    z-index:99;
+
+
+
+  }
     
 
 }

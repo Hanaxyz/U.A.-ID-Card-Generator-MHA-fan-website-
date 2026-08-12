@@ -115,8 +115,9 @@ html2canvas(card).then(canvas => {
 
     link.href=image;
     link.download="UA-ID-Card";
-
-    link.click();
+document.body.appendChild(link);
+link.click();
+link.remove();
 });
 
 });

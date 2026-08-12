@@ -105,21 +105,20 @@ studentPhoto.src=canvas.toDataURL('UA-ID/png',0.9);
 
 })
 
-
-downloadButton.addEventListener("click", () => {
-
-
-html2canvas(card).then(canvas => {
-    const image=canvas.toDataURL("image/png");
-    const link=document.createElement("a");
-
-    link.href=image;
-    link.download="UA-ID-Card";
-document.body.appendChild(link);
-link.click();
-link.remove();
-});
-
+// Simple solution - works on both mobile and desktop
+downloadButton.addEventListener("click", function() {
+    // Convert card to canvas
+    html2canvas(card).then(function(canvas) {
+        // Get image data
+        var imageUrl = canvas.toDataURL("image/png");
+        
+        // Open image in new tab (works on mobile & desktop)
+        var newWindow = window.open();
+        newWindow.document.write('<img src="' + imageUrl + '" style="max-width:100%;height:auto;" />');
+        newWindow.document.write('<p style="text-align:center;font-size:20px;margin-top:20px;font-family:sans-serif;">📱 Press and hold the image to save it</p>');
+    }).catch(function() {
+        alert("Please try again");
+    });
 });
 
 

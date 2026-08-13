@@ -107,6 +107,9 @@ studentPhoto.src = canvas.toDataURL('image/png', 0.9);
 
 downloadButton.addEventListener("click", () => {
 
+
+       alert("CLICK!");
+
     const cardWidth = card.scrollWidth;
     const cardHeight = card.scrollHeight;
 

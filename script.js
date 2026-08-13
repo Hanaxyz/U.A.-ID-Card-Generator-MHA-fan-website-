@@ -117,23 +117,7 @@ downloadButton.addEventListener("click", () => {
 
             if (isMobile) {
 
-                const newWindow = window.open();
-
-                if (newWindow) {
-                    newWindow.document.write(`
-                        <html>
-                            <head>
-                                <title>UA ID Card</title>
-                                <meta name="viewport" content="width=device-width, initial-scale=1">
-                            </head>
-                            <body style="margin:0; display:flex; justify-content:center; align-items:center; min-height:100vh;">
-                                <img src="${url}" style="max-width:100%; height:auto;">
-                            </body>
-                        </html>
-                    `);
-
-                    newWindow.document.close();
-                }
+                window.location.href = url;
 
             } else {
 

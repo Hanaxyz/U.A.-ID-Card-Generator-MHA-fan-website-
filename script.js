@@ -98,7 +98,7 @@ photo.addEventListener('change',()=>{
 
 
 studentPhoto.src = canvas.toDataURL('image/png', 0.9);
-         studentPhoto.style.display = "none";
+       
 
     };
 

@@ -105,42 +105,64 @@ studentPhoto.src=canvas.toDataURL('UA-ID/png',0.9);
 
 })
 
-
 downloadButton.addEventListener("click", () => {
 
-html2canvas(card, {
-    scale: 1.5,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: '#ffffff',
-    width: cardWidth,
-    height: cardHeight,
-    logging: false,
-    onclone: function(document) {
-        const clonedCard = document.querySelector('.card');
-        clonedCard.style.width = cardWidth + 'px';
-        clonedCard.style.height = cardHeight + 'px';
-    }
-}).then(canvas => {
+    const cardWidth = card.scrollWidth;
+    const cardHeight = card.scrollHeight;
 
-    console.log("CANVAS DONE!");
+    html2canvas(card, {
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        width: cardWidth,
+        height: cardHeight,
+        logging: false,
 
-    const link = document.createElement("a");
+        onclone: function(document) {
 
-    link.href = canvas.toDataURL("image/png");
-    link.download = "UA-ID-Card";
+            const clonedCard = document.querySelector(".card");
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+            clonedCard.style.width = cardWidth + "px";
+            clonedCard.style.height = cardHeight + "px";
 
-}).catch((error) => {
+        }
 
-    console.log("HTML2CANVAS ERROR:", error);
-    alert("Download failed");
+    }).then(canvas => {
+
+        console.log("CANVAS DONE!");
+
+        const link = document.createElement("a");
+
+        link.href = canvas.toDataURL("image/png");
+        link.download = "UA-ID-Card";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+    }).catch((error) => {
+
+        console.log("HTML2CANVAS ERROR:", error);
+        alert("Download failed");
+
+    });
 
 });
 
+
+aboutButton.addEventListener("click", () => {
+
+    aboutBox.style.display = "flex";
+
+});
+
+
+closeButton.addEventListener("click", () => {
+
+    aboutBox.style.display = "none";
+
+});
 
 aboutButton.addEventListener('click',()=>{
 

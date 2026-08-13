@@ -107,36 +107,53 @@ studentPhoto.src = canvas.toDataURL('image/png', 0.9);
 })
 downloadButton.addEventListener("click", () => {
 
-    alert("1");
-
     html2canvas(card).then(canvas => {
-
-        alert("2");
 
         canvas.toBlob(blob => {
 
-            alert("3");
+            const url = URL.createObjectURL(blob);
 
-          const url = URL.createObjectURL(blob);
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-window.location.href = url;
+            if (isMobile) {
 
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "UA-ID-Card.png";
+                const newWindow = window.open();
 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                if (newWindow) {
+                    newWindow.document.write(`
+                        <html>
+                            <head>
+                                <title>UA ID Card</title>
+                                <meta name="viewport" content="width=device-width, initial-scale=1">
+                            </head>
+                            <body style="margin:0; display:flex; justify-content:center; align-items:center; min-height:100vh;">
+                                <img src="${url}" style="max-width:100%; height:auto;">
+                            </body>
+                        </html>
+                    `);
 
-            URL.revokeObjectURL(url);
+                    newWindow.document.close();
+                }
+
+            } else {
+
+                const link = document.createElement("a");
+
+                link.href = url;
+                link.download = "UA-ID-Card.png";
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            }
 
         }, "image/png");
 
     }).catch(error => {
 
-        alert("ERROR");
-        console.log(error);
+        console.log("HTML2CANVAS ERROR:", error);
+        alert("Download failed");
 
     });
 

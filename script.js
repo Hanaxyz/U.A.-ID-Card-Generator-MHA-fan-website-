@@ -97,7 +97,7 @@ photo.addEventListener('change',()=>{
   
 
 
-studentPhoto.src=canvas.toDataURL('UA-ID/png',0.9);
+studentPhoto.src = canvas.toDataURL('image/png', 0.9);
 
     };
 
@@ -161,19 +161,6 @@ aboutButton.addEventListener("click", () => {
 closeButton.addEventListener("click", () => {
 
     aboutBox.style.display = "none";
-
-});
-
-aboutButton.addEventListener('click',()=>{
-
-    aboutBox.style.display = "flex";
-
-
-
-});
-
-closeButton.addEventListener("click", () => {
-     aboutBox.style.display = "none";
 
 });
 

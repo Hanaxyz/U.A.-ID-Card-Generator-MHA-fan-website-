@@ -108,16 +108,36 @@ studentPhoto.src=canvas.toDataURL('UA-ID/png',0.9);
 
 downloadButton.addEventListener("click", () => {
 
+html2canvas(card, {
+    scale: 1.5,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#ffffff',
+    width: cardWidth,
+    height: cardHeight,
+    logging: false,
+    onclone: function(document) {
+        const clonedCard = document.querySelector('.card');
+        clonedCard.style.width = cardWidth + 'px';
+        clonedCard.style.height = cardHeight + 'px';
+    }
+}).then(canvas => {
 
-html2canvas(card).then(canvas => {
-    const image=canvas.toDataURL("image/png");
-    const link=document.createElement("a");
+    console.log("CANVAS DONE!");
 
-    link.href=image;
-    link.download="UA-ID-Card";
+    const link = document.createElement("a");
 
+    link.href = canvas.toDataURL("image/png");
+    link.download = "UA-ID-Card";
+
+    document.body.appendChild(link);
     link.click();
-});
+    document.body.removeChild(link);
+
+}).catch((error) => {
+
+    console.log("HTML2CANVAS ERROR:", error);
+    alert("Download failed");
 
 });
 
@@ -135,46 +155,3 @@ closeButton.addEventListener("click", () => {
 
 });
 
-
-downloadButton.addEventListener("click", () => {
-     alert("click");
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        const cardWidth = card.scrollWidth;
-        const cardHeight = card.scrollHeight;
-        
-        html2canvas(card, {
-            scale: 1.5,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#ffffff',
-            width: cardWidth,
-            height: cardHeight,
-            logging: false,
-            onclone: function(document) {
-                const clonedCard = document.querySelector('.card');
-                clonedCard.style.width = cardWidth + 'px';
-                clonedCard.style.height = cardHeight + 'px';
-            }
-        }).then(canvas => {
-            const link = document.createElement("a");
-            link.href = canvas.toDataURL("image/png");
-            link.download = "UA-ID-Card";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }).catch(() => {
-            alert("Download failed, please use a computer");
-        });
-    } else {
-        html2canvas(card).then(canvas => {
-            const link = document.createElement("a");
-            link.href = canvas.toDataURL("image/png");
-            link.download = "UA-ID-Card";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    }
-});

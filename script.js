@@ -106,32 +106,34 @@ studentPhoto.src = canvas.toDataURL('image/png', 0.9);
 })
 downloadButton.addEventListener("click", () => {
 
+    alert("1");
+
     html2canvas(card).then(canvas => {
 
-        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        alert("2");
 
-            canvas.toBlob(blob => {
+        canvas.toBlob(blob => {
 
-                const url = URL.createObjectURL(blob);
+            alert("3");
 
-                window.open(url, "_blank");
-
-            }, "image/png");
-
-        } else {
-
-            const image = canvas.toDataURL("image/png");
+            const url = URL.createObjectURL(blob);
 
             const link = document.createElement("a");
-
-            link.href = image;
+            link.href = url;
             link.download = "UA-ID-Card.png";
 
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
-        }
+            URL.revokeObjectURL(url);
+
+        }, "image/png");
+
+    }).catch(error => {
+
+        alert("ERROR");
+        console.log(error);
 
     });
 

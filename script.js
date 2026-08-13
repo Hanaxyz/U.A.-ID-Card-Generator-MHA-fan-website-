@@ -104,56 +104,38 @@ studentPhoto.src = canvas.toDataURL('image/png', 0.9);
 
 
 })
-
 downloadButton.addEventListener("click", () => {
 
+    html2canvas(card).then(canvas => {
 
-       alert("CLICK!");
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
-    const cardWidth = card.scrollWidth;
-    const cardHeight = card.scrollHeight;
+            canvas.toBlob(blob => {
 
-    html2canvas(card, {
-        scale: 1.5,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        width: cardWidth,
-        height: cardHeight,
-        logging: false,
+                const url = URL.createObjectURL(blob);
 
-        onclone: function(document) {
+                window.open(url, "_blank");
 
-            const clonedCard = document.querySelector(".card");
+            }, "image/png");
 
-            clonedCard.style.width = cardWidth + "px";
-            clonedCard.style.height = cardHeight + "px";
+        } else {
+
+            const image = canvas.toDataURL("image/png");
+
+            const link = document.createElement("a");
+
+            link.href = image;
+            link.download = "UA-ID-Card.png";
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
         }
-
-    }).then(canvas => {
-
-        console.log("CANVAS DONE!");
-
-        const link = document.createElement("a");
-
-        link.href = canvas.toDataURL("image/png");
-        link.download = "UA-ID-Card";
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-    }).catch((error) => {
-
-        console.log("HTML2CANVAS ERROR:", error);
-        alert("Download failed");
 
     });
 
 });
-
-
 aboutButton.addEventListener("click", () => {
 
     aboutBox.style.display = "flex";
@@ -167,9 +149,6 @@ closeButton.addEventListener("click", () => {
 
 });
 
-console.log("SCRIPT IS RUNNING!");
 
-downloadButton.addEventListener("click", () => {
-    alert("CLICK!");
-});
+
 

@@ -309,12 +309,15 @@ cursor: pointer;
         font-size: 7px;
         padding: 5px 8px;
     }
-    .download-button {
+
+
+      .download-button {
     position: fixed;
     left: 50%;
     bottom: 20px;
     transform: translateX(-50%);
     z-index: 9999;
 }
+
 
 }

@@ -117,7 +117,9 @@ downloadButton.addEventListener("click", () => {
 
             alert("3");
 
-            const url = URL.createObjectURL(blob);
+          const url = URL.createObjectURL(blob);
+
+window.location.href = url;
 
             const link = document.createElement("a");
             link.href = url;

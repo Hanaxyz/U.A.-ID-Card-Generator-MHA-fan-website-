@@ -167,3 +167,9 @@ closeButton.addEventListener("click", () => {
 
 });
 
+console.log("SCRIPT IS RUNNING!");
+
+downloadButton.addEventListener("click", () => {
+    alert("CLICK!");
+});
+

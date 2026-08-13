@@ -105,22 +105,36 @@ studentPhoto.src=canvas.toDataURL('UA-ID/png',0.9);
 
 })
 
-// Simple solution - works on both mobile and desktop
-downloadButton.addEventListener("click", function() {
-    // Convert card to canvas
-    html2canvas(card).then(function(canvas) {
-        // Get image data
-        var imageUrl = canvas.toDataURL("image/png");
-        
-        // Open image in new tab (works on mobile & desktop)
-        var newWindow = window.open();
-        newWindow.document.write('<img src="' + imageUrl + '" style="max-width:100%;height:auto;" />');
-        newWindow.document.write('<p style="text-align:center;font-size:20px;margin-top:20px;font-family:sans-serif;">📱 Press and hold the image to save it</p>');
-    }).catch(function() {
-        alert("Please try again");
+downloadButton.addEventListener("click", () => {
+    const cardWidth = card.offsetWidth;
+    const cardHeight = card.offsetHeight;
+
+    html2canvas(card, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        width: cardWidth,
+        height: cardHeight,
+        windowWidth: cardWidth,
+        windowHeight: cardHeight,
+        onclone: function(document) {
+            const clonedCard = document.querySelector('.card');
+            clonedCard.style.transform = 'scale(1)';
+            clonedCard.style.width = cardWidth + 'px';
+            clonedCard.style.height = cardHeight + 'px';
+        }
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "UA-ID-Card";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }).catch(error => {
+        alert("Error");
     });
 });
-
 
 aboutButton.addEventListener('click',()=>{
 

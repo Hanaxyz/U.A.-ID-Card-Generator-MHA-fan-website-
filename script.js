@@ -137,6 +137,7 @@ closeButton.addEventListener("click", () => {
 
 
 downloadButton.addEventListener("click", () => {
+     alert("click");
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     
     if (isMobile) {

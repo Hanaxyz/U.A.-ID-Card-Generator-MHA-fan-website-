@@ -132,7 +132,7 @@ downloadButton.addEventListener("click", () => {
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     html2canvas(card, {
-        scale: isMobile ? 1.5 : 1,
+        scale: isMobile ? 2 : 1.5,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
@@ -141,16 +141,19 @@ downloadButton.addEventListener("click", () => {
 
         const image = canvas.toDataURL("image/png");
         
-        const link = document.createElement('a');
-        link.href = image;
-        link.download = 'UA-ID-Card.png';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        
-        setTimeout(() => {
+        if (isMobile) {
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "UA-ID-Card.png";
+            document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }, 50);
+        } else {
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "UA-ID-Card.png";
+            link.click();
+        }
 
     }).catch(error => {
         console.error(error);

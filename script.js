@@ -52,7 +52,7 @@ draw.scale(dpr, dpr);
 
         drawHeight=StudentPhotoHeight;// the uploaded image is wider than the canvas (student pic area):
        drawWidth=StudentPhotoHeight*imageAspect;
-       offsetX = (canvas.width - drawWidth) / 2; // or we can use StudentPhotoWidth
+       offsetX = (StudentPhotoWidth - drawWidth) / 2; 
 
    
 
@@ -64,7 +64,7 @@ draw.scale(dpr, dpr);
 
         drawWidth=StudentPhotoWidth;
         drawHeight=StudentPhotoWidth/imageAspect;
-        offsetY = (canvas.height - drawHeight) / 2;// also we can use StudentPhotoHeight
+        offsetY = (StudentPhotoHeight - drawHeight) / 2;
 
 
 

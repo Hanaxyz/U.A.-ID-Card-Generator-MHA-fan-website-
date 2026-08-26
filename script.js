@@ -113,21 +113,6 @@ studentPhoto.src = canvas.toDataURL('image/png');
 })
 
 
-downloadButton.addEventListener("click", () => {
-
-
-html2canvas(card).then(canvas => {
-    const image=canvas.toDataURL("image/png");
-    const link=document.createElement("a");
-
-    link.href=image;
-    link.download="UA-ID-Card";
-
-    link.click();
-});
-
-});
-
 
 aboutButton.addEventListener('click',()=>{
 

@@ -139,15 +139,18 @@ downloadButton.addEventListener("click", () => {
         logging: false,
     }).then(canvas => {
 
-        canvas.toBlob(function(blob) {
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "UA-ID-Card.png";
-            document.body.appendChild(link);
+        const image = canvas.toDataURL("image/png");
+        
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'UA-ID-Card.png';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        
+        setTimeout(() => {
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        });
+        }, 50);
 
     }).catch(error => {
         console.error(error);

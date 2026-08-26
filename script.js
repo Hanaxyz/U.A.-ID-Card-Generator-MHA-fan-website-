@@ -8,6 +8,7 @@ const aboutButton = document.querySelector(".about");
 const aboutBox = document.querySelector(".about-box");
 const closeButton = document.querySelector(".close");
 
+
 photo.addEventListener('change',()=>{
      const file=photo.files[0];
       const Imgurl=URL.createObjectURL(file);

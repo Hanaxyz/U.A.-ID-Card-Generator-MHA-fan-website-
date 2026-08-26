@@ -127,37 +127,21 @@ closeButton.addEventListener("click", () => {
 
 });
 
-downloadButton.addEventListener("click", () => {
-
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+downloadButton.addEventListener("click", function() {
 
     html2canvas(card, {
-        scale: isMobile ? 2 : 1.5,
+        scale: 1.5,
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
-        logging: false,
-    }).then(canvas => {
+    }).then(function(canvas) {
 
-        const image = canvas.toDataURL("image/png");
-        
-        if (isMobile) {
-            const link = document.createElement("a");
-            link.href = image;
-            link.download = "UA-ID-Card.png";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } else {
-            const link = document.createElement("a");
-            link.href = image;
-            link.download = "UA-ID-Card.png";
-            link.click();
-        }
+        var image = canvas.toDataURL();
+        var a = document.createElement('a');
+        a.href = image;
+        a.download = 'UA-ID-Card.png';
+        a.click();
 
-    }).catch(error => {
-        console.error(error);
-        alert("Download failed, please try again.");
     });
 
 });

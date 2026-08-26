@@ -127,21 +127,60 @@ closeButton.addEventListener("click", () => {
 
 });
 
-downloadButton.addEventListener("click", function() {
+downloadButton.addEventListener("click", function () {
 
-    html2canvas(card, {
-        scale: 1.5,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-    }).then(function(canvas) {
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-        var image = canvas.toDataURL();
-        var a = document.createElement('a');
-        a.href = image;
-        a.download = 'UA-ID-Card.png';
-        a.click();
+    if (isMobile) {
 
-    });
+        const newTab = window.open("", "_blank");
+
+        html2canvas(card, {
+            scale: 1.5,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff"
+        }).then(function (canvas) {
+
+            const image = canvas.toDataURL("image/png");
+
+            if (newTab) {
+                newTab.document.write(`
+                    <html>
+                    <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    </head>
+
+                    <body style="margin:0; text-align:center;">
+                        <img src="${image}" style="max-width:100%; height:auto;">
+                    </body>
+
+                    </html>
+                `);
+
+                newTab.document.close();
+            }
+
+        });
+
+    } else {
+
+        html2canvas(card, {
+            scale: 1.5,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff"
+        }).then(function (canvas) {
+
+            const a = document.createElement("a");
+
+            a.href = canvas.toDataURL("image/png");
+            a.download = "UA-ID-Card.png";
+
+            a.click();
+
+        });
+
+    }
 
 });

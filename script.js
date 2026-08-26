@@ -129,84 +129,29 @@ closeButton.addEventListener("click", () => {
 
 downloadButton.addEventListener("click", () => {
 
-    const userAgent = navigator.userAgent;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(userAgent);
+    html2canvas(card, {
+        scale: isMobile ? 1.5 : 1,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+    }).then(canvas => {
 
-    // Google app
-    const isGoogleApp = /; wv\)|GSA\//i.test(userAgent);
-
-    if (isMobile) {
-
-        const cardWidth = card.scrollWidth;
-        const cardHeight = card.scrollHeight;
-
-        html2canvas(card, {
-            scale: 1.5,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: "#ffffff",
-            width: cardWidth,
-            height: cardHeight,
-            logging: false,
-
-            onclone: function(document) {
-
-                const clonedCard = document.querySelector(".card");
-
-                clonedCard.style.width = cardWidth + "px";
-                clonedCard.style.height = cardHeight + "px";
-
-            }
-
-        }).then(canvas => {
-
-            const image = canvas.toDataURL("image/png");
-
-            if (isGoogleApp) {
-
-                window.open(image, "_blank");
-
-            } else {
-
-                const link = document.createElement("a");
-
-                link.href = image;
-                link.download = "UA-ID-Card";
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-            }
-
-        }).catch(error => {
-
-            console.error(error);
-            alert("Download failed, please try again.");
-
-        });
-
-    } else {
-
-        html2canvas(card).then(canvas => {
-
+        canvas.toBlob(function(blob) {
             const link = document.createElement("a");
-
-            link.href = canvas.toDataURL("image/png");
-            link.download = "UA-ID-Card";
-
+            link.href = URL.createObjectURL(blob);
+            link.download = "UA-ID-Card.png";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
-        }).catch(error => {
-
-            console.error(error);
-            alert("Download failed, please try again.");
-
+            URL.revokeObjectURL(link.href);
         });
 
-    }
+    }).catch(error => {
+        console.error(error);
+        alert("Download failed, please try again.");
+    });
 
 });
